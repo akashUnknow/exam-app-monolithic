@@ -1,0 +1,60 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: exam-app-monolithic
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/exam_app_db
+    username: postgres
+    password: 2486
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: akashtenp@gmail.com
+    password: zacj pnwk gxwo wwfq
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 1020765082579-h99b9d3chv1fnsflo1n1dlpbt0d2fdhg.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+              - email
+              - profile
+
+jwt:
+  secret: mrmlCNCptBrrf5fd+u1+BlB+fq8PSMAkd/YQNPgz77DIEciN5VzQOHOHHMejxQJ0/eT/3ZMM83+kwXibWW1uPg==
+  expiration: 86400000
+
+file:
+  upload-dir: ./uploads/questions
+
+logging:
+  level:
+    com.examapp: DEBUG
+    org.springframework.security: DEBUG
