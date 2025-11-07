@@ -30,7 +30,8 @@ public class UserController {
     public ResponseEntity<UserProfile> getUserProfile(@PathVariable Long userId) {
         return ResponseEntity.ok(userService.getUserProfile(userId));
     }
-    
+
+    //update user profile
     @PutMapping("/{userId}")
     public ResponseEntity<UserProfile> updateUserProfile(
             @PathVariable Long userId,

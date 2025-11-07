@@ -39,4 +39,10 @@ public class AuthController {
         return "Welcome to the secured application!";
     }
 
+    @PutMapping("/update-user")
+    public String updateUser(@RequestBody UpdateUser updateUser) {
+        authService.updateUser(updateUser);
+        return "User updated successfully!";
+    }
+
 }

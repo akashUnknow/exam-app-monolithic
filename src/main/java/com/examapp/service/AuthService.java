@@ -96,4 +96,24 @@ public class AuthService {
         });
     }
 
+
+    public void updateUser(UpdateUser updateUser) {
+        User user = userRepository.findByEmail(updateUser.getEmail())
+            .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (updateUser.getName() != null) {
+            user.setName(updateUser.getName());
+        }
+        if (updateUser.getPhoneNumber() != null) {
+            user.setPhoneNumber(updateUser.getPhoneNumber());
+        }
+        if (updateUser.getPassword() != null) {
+            user.setPassword(passwordEncoder.encode(updateUser.getPassword()));
+        }
+        if (updateUser.getIsVerified() != null) {
+            user.setIsVerified(updateUser.getIsVerified());
+        }
+
+        userRepository.save(user);
+    }
 }
