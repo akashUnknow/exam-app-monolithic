@@ -1,5 +1,6 @@
 package com.examapp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -7,10 +8,12 @@ import jakarta.persistence.*;
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
     
     @ManyToOne
     @JoinColumn(name = "category_id")
+    @JsonBackReference
     private ExamCategory category;
     
     @Column(columnDefinition = "TEXT")

@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -21,12 +24,42 @@ public class AdminController {
     
     @Autowired
     private FileStorageService fileStorageService;
-    
+
     @PostMapping("/questions")
-    public ResponseEntity<Question> createQuestion(@RequestBody QuestionRequest request) {
-        return ResponseEntity.ok(adminService.createQuestion(request));
+    public ResponseEntity<Map<String, Object>> createQuestion(@RequestBody QuestionRequest request) {
+        Question question = adminService.createQuestion(request);
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Question created successfully");
+        response.put("questionId", question.getId());
+        response.put("category", question.getCategory().getName());
+
+        return ResponseEntity.ok(response);
+
+
     }
-    
+
+    @PostMapping("/questions/bulk")
+    public ResponseEntity<Map<String, Object>> createMultipleQuestions(@RequestBody List<QuestionRequest> requests) {
+        List<Question> savedQuestions = adminService.createMultipleQuestions(requests);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Questions created successfully");
+        response.put("count", savedQuestions.size());
+        response.put("questionIds", savedQuestions.stream().map(Question::getId).toList());
+        response.put("category", savedQuestions.get(0).getCategory().getName());
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/random")
+    public ResponseEntity<List<Question>> getRandomQuestions(
+            @RequestParam(defaultValue = "1") Long categoryId,
+            @RequestParam(defaultValue = "50") int limit) {
+
+        List<Question> randomQuestions = adminService.getRandomQuestions(categoryId, limit);
+        return ResponseEntity.ok(randomQuestions);
+    }
+
     @PostMapping("/questions/with-image")
     public ResponseEntity<Question> createQuestionWithImage(
             @RequestParam("categoryId") Long categoryId,

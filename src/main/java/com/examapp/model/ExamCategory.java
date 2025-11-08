@@ -1,6 +1,9 @@
 package com.examapp.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import net.minidev.json.annotate.JsonIgnore;
+
 import java.util.List;
 
 @Entity
@@ -18,6 +21,7 @@ public class ExamCategory {
     private String color;
     
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Question> questions;
     
     // Getters and Setters
