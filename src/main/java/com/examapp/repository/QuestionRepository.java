@@ -11,8 +11,8 @@ import com.examapp.model.Question;
 @Repository
 public interface QuestionRepository extends JpaRepository<Question, Long> {
     List<Question> findByCategoryIdAndIsActiveTrue(Long categoryId);
-    
-    @Query(value = "SELECT * FROM questions WHERE category_id = ?1 AND is_active = true ORDER BY RAND() LIMIT ?2", 
-           nativeQuery = true)
+
+    @Query(value = "SELECT * FROM questions WHERE category_id = ?1 AND is_active = true ORDER BY RANDOM() LIMIT ?2",
+            nativeQuery = true)
     List<Question> findRandomQuestionsByCategory(Long categoryId, Integer limit);
 }
