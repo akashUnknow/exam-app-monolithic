@@ -23,7 +23,18 @@ public class UserProfile {
     private Integer totalScore = 0;
     private Integer testsCompleted = 0;
     private Integer rank;
-    
+
+    // Constructors
+    public UserProfile() {}
+
+    public UserProfile(Long id, String name, String email, String phoneNumber) {
+        this.userId = id;
+        this.name = name;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+    }
+
+
     @ManyToMany
     @JoinTable(
         name = "user_friends",
