@@ -42,7 +42,8 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth2 -> oauth2
-                        .defaultSuccessUrl("http://127.0.0.1:5173/dashboard", true)
+//                        .defaultSuccessUrl("http://127.0.0.1:5173/dashboard", true)
+                                .defaultSuccessUrl("http://localhost:5173/dashboard", true)
                 );
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
