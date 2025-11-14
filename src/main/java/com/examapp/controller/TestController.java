@@ -34,8 +34,8 @@ public class TestController {
     }
     
     @PostMapping("/submit")
-    public ResponseEntity<TestResult> submitTest(@RequestBody SubmitTestRequest request) {
-        return ResponseEntity.ok(testService.submitTest(request));
+    public ResponseEntity<String> submitTest(@RequestBody SubmitTestRequest request) {
+        return ResponseEntity.ok(testService.submitTest(request).toString());
     }
     
     @GetMapping("/history/{userId}")

@@ -24,7 +24,8 @@ public class GoogleOAuthController {
         return Map.of(
                 "name", principal.getAttribute("name"),
                 "email", principal.getAttribute("email"),
-                "email_verified", principal.getAttribute("email_verified")
+                "email_verified", principal.getAttribute("email_verified"),
+                "userId", authService.getUserIdByEmail(principal.getAttribute("email"))
         );
 
     }

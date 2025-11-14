@@ -36,7 +36,9 @@ public class SecurityConfig {
                                 "/uploads/**",
                                 "/user-info",
                                 "/api/admin/**",
-                                "/api/exams/**"
+                                "/api/exams/**",
+                                "/api/users/**",
+                                "/api/tests/**"
                         ).permitAll()
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()

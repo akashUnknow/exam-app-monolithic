@@ -20,9 +20,9 @@ public class ExamCategory {
     private Integer testCount;
     private String color;
     
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private List<Question> questions;
+//    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+//    @JsonManagedReference
+//    private List<Question> questions;
     
     // Getters and Setters
     public Long getId() { return id; }
@@ -46,6 +46,6 @@ public class ExamCategory {
     public String getColor() { return color; }
     public void setColor(String color) { this.color = color; }
     
-    public List<Question> getQuestions() { return questions; }
-    public void setQuestions(List<Question> questions) { this.questions = questions; }
+//    public List<Question> getQuestions() { return questions; }
+//    public void setQuestions(List<Question> questions) { this.questions = questions; }
 }

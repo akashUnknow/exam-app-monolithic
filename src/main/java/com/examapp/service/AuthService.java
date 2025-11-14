@@ -54,7 +54,7 @@ public class AuthService {
 
         String token = jwtUtil.generateToken(user.getId(), user.getEmail(), user.getRole());
         return new AuthResponse(token, user.getId().toString(), user.getName(),
-                user.getEmail(), user.getRole());
+                user.getEmail(), user.getRole(),user.getIsVerified());
     }
 
     // 🔹 Login existing user
@@ -68,7 +68,7 @@ public class AuthService {
 
         String token = jwtUtil.generateToken(user.getId(), user.getEmail(), user.getRole());
         return new AuthResponse(token, user.getId().toString(), user.getName(),
-                user.getEmail(), user.getRole());
+                user.getEmail(), user.getRole(),user.getIsVerified());
     }
 
     // 🔹 Send OTP
@@ -107,7 +107,7 @@ public class AuthService {
 
         String token = jwtUtil.generateToken(user.getId(), user.getEmail(), user.getRole());
         return new AuthResponse(token, user.getId().toString(), user.getName(),
-                user.getEmail() != null ? user.getEmail() : "", user.getRole());
+                user.getEmail() != null ? user.getEmail() : "", user.getRole() ,user.getIsVerified());
     }
 
     // 🔹 Register by OAuth2 (Google Login)
@@ -163,5 +163,11 @@ public class AuthService {
             profile.setPhoneNumber(user.getPhoneNumber());
             userProfileRepository.save(profile);
         });
+    }
+
+    public Object getUserIdByEmail(Object email) {
+        User user = userRepository.findByEmail((String) email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return user.getId();
     }
 }
