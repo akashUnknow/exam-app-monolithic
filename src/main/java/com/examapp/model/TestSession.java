@@ -14,10 +14,11 @@ public class TestSession {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long userId;
+    private String examName;
     private String mode; // SOLO, CHALLENGE
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private Integer score;
+    private Long score;
     private Boolean completed = false;
 
     

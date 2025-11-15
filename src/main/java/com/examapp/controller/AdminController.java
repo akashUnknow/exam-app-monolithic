@@ -60,6 +60,7 @@ public class AdminController {
         return ResponseEntity.ok(randomQuestions);
     }
 
+
     @PostMapping("/questions/with-image")
     public ResponseEntity<Question> createQuestionWithImage(
             @RequestParam("categoryId") Long categoryId,

@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class StartTestRequest {
     private Long userId;
-    private Long categoryId;
+    private String examName;
     private String mode;
 }

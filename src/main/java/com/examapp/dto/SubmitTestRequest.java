@@ -14,5 +14,5 @@ public class SubmitTestRequest {
     private Long testSessionId;
     private LocalDateTime timeTaken= LocalDateTime.now();
     private Boolean completed = false;
-    private Integer score;
+    private Long score;
 }

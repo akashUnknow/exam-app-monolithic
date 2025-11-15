@@ -30,6 +30,7 @@ public class TestService {
         TestSession session = new TestSession();
         session.setUserId(request.getUserId());
         session.setMode(request.getMode());
+        session.setExamName(request.getExamName());
         return testSessionRepository.save(session);
     }
     
