@@ -6,10 +6,10 @@ spring:
     name: exam-app-monolithic
 
   datasource:
-    url: jdbc:postgresql://ep-royal-rain-a1ewumji-pooler.ap-southeast-1.aws.neon.tech/exam_app_db
-    username: neondb_owner
-    password: npg_5CrhvoDPaTp1
-    driver-class-name: org.postgresql.Driver
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: ${SPRING_DATASOURCE_DRIVER_CLASS_NAME}
 
   jpa:
     hibernate:
@@ -25,10 +25,10 @@ spring:
       max-request-size: 10MB
 
   mail:
-    host: smtp.gmail.com
-    port: 587
-    username: akashtenp@gmail.com
-    password: zacj pnwk gxwo wwfq
+    host: ${SPRING_MAIL_HOST}
+    port: ${SPRING_MAIL_PORT}
+    username: ${SPRING_MAIL_USERNAME}
+    password: ${SPRING_MAIL_PASSWORD}
     properties:
       mail:
         smtp:
@@ -41,15 +41,15 @@ spring:
       client:
         registration:
           google:
-            client-id: 1020765082579-h99b9d3chv1fnsflo1n1dlpbt0d2fdhg.apps.googleusercontent.com
-            client-secret: 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
+            client-id: ${SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_ID}
+            client-secret: ${SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_SECRET}
             scope:
               - email
               - profile
 
 jwt:
-  secret: mrmlCNCptBrrf5fd+u1+BlB+fq8PSMAkd/YQNPgz77DIEciN5VzQOHOHHMejxQJ0/eT/3ZMM83+kwXibWW1uPg==
-  expiration: 86400000
+  secret: ${JWT_SECRET}
+  expiration: ${JWT_EXPIRATION}
 
 file:
   upload-dir: ./uploads/questions
@@ -58,3 +58,5 @@ logging:
   level:
     com.examapp: DEBUG
     org.springframework.security: DEBUG
+app:
+  frontend-url: ${FRONTEND_URL}

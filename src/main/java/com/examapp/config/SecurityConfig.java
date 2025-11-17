@@ -2,6 +2,7 @@ package com.examapp.config;
 
 import com.examapp.security.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,11 +20,18 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    @Value("${app.frontend-url}")
+    private String frontendUrl;
+
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+        // FRONTEND URL IS NOW AVAILABLE HERE
+        String redirectAfterLogin = frontendUrl + "/dashboard";
+
         http
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
@@ -44,8 +52,10 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth2 -> oauth2
-//                        .defaultSuccessUrl("http://127.0.0.1:5173/dashboard", true)
-                                .defaultSuccessUrl("http://localhost:5173/dashboard", true)
+                        .defaultSuccessUrl(redirectAfterLogin, true)
+                        .failureHandler((request, response, exception) -> {
+                            response.sendRedirect(frontendUrl + "/log-in?error=oauth_failed");
+                        })
                 );
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
@@ -56,7 +66,11 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "http://localhost:3000","http://127.0.0.1:5173"));
+        configuration.setAllowedOrigins(Arrays.asList(
+                frontendUrl,
+                frontendUrl,
+                "http://localhost:3000"
+        ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
