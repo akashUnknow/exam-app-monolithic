@@ -5,11 +5,13 @@ import com.examapp.model.ExamCategory;
 import com.examapp.model.Question;
 import com.examapp.service.AdminService;
 import com.examapp.service.FileStorageService;
+import com.examapp.service.ImageUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +25,7 @@ public class AdminController {
     private AdminService adminService;
     
     @Autowired
-    private FileStorageService fileStorageService;
+    private ImageUploadService imageUploadService;
 
     @PostMapping("/questions")
     public ResponseEntity<Map<String, Object>> createQuestion(@RequestBody QuestionRequest request) {
@@ -76,7 +78,7 @@ public class AdminController {
             @RequestParam(value = "option4Image", required = false) MultipartFile option4Image,
             @RequestParam("correctOption") Integer correctOption,
             @RequestParam("difficulty") String difficulty,
-            @RequestParam(value = "explanation", required = false) String explanation) {
+            @RequestParam(value = "explanation", required = false) String explanation) throws IOException {
         
         QuestionRequest request = new QuestionRequest();
         request.setCategoryId(categoryId);
@@ -90,21 +92,21 @@ public class AdminController {
         request.setExplanation(explanation);
         
         if (questionImage != null && !questionImage.isEmpty()) {
-            String imageUrl = fileStorageService.storeFile(questionImage);
+            String imageUrl = imageUploadService.uploadImage(questionImage);
             request.setQuestionImageUrl(imageUrl);
         }
         
         if (option1Image != null && !option1Image.isEmpty()) {
-            request.setOption1ImageUrl(fileStorageService.storeFile(option1Image));
+            request.setOption1ImageUrl(imageUploadService.uploadImage(option1Image));
         }
         if (option2Image != null && !option2Image.isEmpty()) {
-            request.setOption2ImageUrl(fileStorageService.storeFile(option2Image));
+            request.setOption2ImageUrl(imageUploadService.uploadImage(option2Image));
         }
         if (option3Image != null && !option3Image.isEmpty()) {
-            request.setOption3ImageUrl(fileStorageService.storeFile(option3Image));
+            request.setOption3ImageUrl(imageUploadService.uploadImage(option3Image));
         }
         if (option4Image != null && !option4Image.isEmpty()) {
-            request.setOption4ImageUrl(fileStorageService.storeFile(option4Image));
+            request.setOption4ImageUrl(imageUploadService.uploadImage(option4Image));
         }
         
         return ResponseEntity.ok(adminService.createQuestion(request));
